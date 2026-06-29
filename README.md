@@ -1,6 +1,6 @@
 # Options Pricer
 
-A complete options pricing library in Python — analytical and numerical models, Greeks, strategies, exotic options, portfolio management, interactive hedging, and a Streamlit interface.
+A complete options pricing library in Python  analytical and numerical models, Greeks, strategies, exotic options, portfolio management, interactive hedging, and a Streamlit interface.
 
 ---
 
@@ -15,7 +15,7 @@ A complete options pricing library in Python — analytical and numerical models
 - [Option Types](#option-types)
 - [Greeks](#greeks)
 - [Strategies](#strategies)
-- [Interface — Tab Guide](#interface--tab-guide)
+- [Interface  Tab Guide](#interface--tab-guide)
 - [Database](#database)
 - [Market Data](#market-data)
 - [Configuration](#configuration)
@@ -30,7 +30,7 @@ This project is an end-to-end options pricer built to apply quantitative finance
 
 It is built around five independent pricing methods, an analytical and numerical Greeks engine, a portfolio generator that pulls real market data from Yahoo Finance (SPY options chain), and a full Streamlit interface with a dark theme.
 
-The core idea is to price the same option with every available method simultaneously, compute a consensus price, measure the spread of uncertainty across methods, compare it to the market mid price, and use the resulting Greeks to make hedging decisions — all from a single interface.
+The core idea is to price the same option with every available method simultaneously, compute a consensus price, measure the spread of uncertainty across methods, compare it to the market mid price, and use the resulting Greeks to make hedging decisions  all from a single interface.
 
 ---
 
@@ -45,7 +45,7 @@ The core idea is to price the same option with every available method simultaneo
 ### Greeks
 - Closed-form Black-Scholes formulas for European options
 - Central finite differences (bump and reprice) for any other pricer
-- Delta, Gamma, Vega, Theta, Rho — computed per position and aggregated at portfolio level
+- Delta, Gamma, Vega, Theta, Rho  computed per position and aggregated at portfolio level
 
 ### Strategies
 - Call Spread, Put Spread, Straddle, Strangle, Butterfly, Iron Condor
@@ -96,7 +96,7 @@ Pricer_Project/
 │   └── finite_diff.py             Crank-Nicolson finite difference scheme
 │
 ├── greeks/
-│   └── greeks.py                  Greeks class — analytical and numerical
+│   └── greeks.py                  Greeks class  analytical and numerical
 │
 ├── strategies/
 │   └── strategies.py              Multi-leg option strategies
@@ -106,9 +106,9 @@ Pricer_Project/
 │   └── pnl_heatmap.py             P&L stress test heatmap
 │
 ├── data/
-│   ├── market_data.py             MarketDataLoader — yfinance with synthetic fallback
+│   ├── market_data.py             MarketDataLoader  yfinance with synthetic fallback
 │   ├── portfolio_generator.py     Random portfolio generation from market data
-│   ├── database.py                SQLite layer (SQLAlchemy) — inputs and outputs tables
+│   ├── database.py                SQLite layer (SQLAlchemy)  inputs and outputs tables
 │   ├── pricer.db                  SQLite database (auto-created on first run)
 │   ├── input_data.csv             Legacy CSV
 │   └── output_data.csv            Legacy CSV
@@ -118,9 +118,9 @@ Pricer_Project/
 │   └── pnl_calculator.py         Mark-to-market P&L calculator
 │
 ├── interface/
-│   └── app.py                     Streamlit application — 7 tabs, dark theme
+│   └── app.py                     Streamlit application  7 tabs, dark theme
 │
-├── main.py                        CLI entry point — quick test of all modules
+├── main.py                        CLI entry point  quick test of all modules
 ├── requirements.txt
 └── pyrightconfig.json             Pylance / Pyright import resolution config
 ```
@@ -178,7 +178,7 @@ where:
     d1 = ( ln(S/K) + (r - y + 0.5 * sigma^2) * T ) / ( sigma * sqrt(T) )
     d2 = d1 - sigma * sqrt(T)
 
-### Binomial — Cox-Ross-Rubinstein
+### Binomial  Cox-Ross-Rubinstein
 
 Recombining binomial tree with N time steps. Fully vectorised via NumPy (no nested Python loops). Supports both European and American exercise. The up and down factors are:
 
@@ -190,7 +190,7 @@ Risk-neutral probability:
 
 Early exercise is enforced at each backward induction step for American options.
 
-### Trinomial — Boyle
+### Trinomial  Boyle
 
 Three-branch recombining tree using the Boyle (1986) parametrisation. Converges faster than the binomial at equal N because each time step covers a larger price range. Up factor:
 
@@ -206,7 +206,7 @@ American early exercise is handled by the Longstaff-Schwartz least-squares Monte
 
 Exotic options (Asian, Barrier, Lookback) are priced by recording the full path and applying the relevant payoff function.
 
-### Finite Differences — Crank-Nicolson
+### Finite Differences  Crank-Nicolson
 
 Solves the Black-Scholes PDE on a two-dimensional (S, t) grid using the Crank-Nicolson scheme. The scheme is unconditionally stable and second-order accurate in both time and space. At each backward time step, a tridiagonal linear system is solved via the banded solver from SciPy.
 
@@ -218,15 +218,15 @@ For American options, a projection step is applied at each node to enforce the e
 
 All option classes inherit from `BaseOption` and share the same parameter interface: spot price S, strike K, time to maturity t (in years), risk-free rate r, volatility sigma, and continuous dividend yield y.
 
-**EuropeanOption** — exercise at maturity only. Compatible with all five pricing methods.
+**EuropeanOption**  exercise at maturity only. Compatible with all five pricing methods.
 
-**AmericanOption** — exercise possible at any time before maturity. Compatible with Binomial, Trinomial, Monte Carlo, and Finite Differences.
+**AmericanOption**  exercise possible at any time before maturity. Compatible with Binomial, Trinomial, Monte Carlo, and Finite Differences.
 
-**AsianOption** — payoff depends on the average of the underlying price over the option life. Parameters: `averaging` (arithmetic or geometric) and `avg_type` (price or strike). Priced by Monte Carlo only.
+**AsianOption**  payoff depends on the average of the underlying price over the option life. Parameters: `averaging` (arithmetic or geometric) and `avg_type` (price or strike). Priced by Monte Carlo only.
 
-**BarrierOption** — the option is activated or extinguished when the underlying crosses a barrier level. Parameter `barrier_type` accepts: down-and-out, up-and-out, down-and-in, up-and-in. Priced by Monte Carlo.
+**BarrierOption**  the option is activated or extinguished when the underlying crosses a barrier level. Parameter `barrier_type` accepts: down-and-out, up-and-out, down-and-in, up-and-in. Priced by Monte Carlo.
 
-**LookbackOption** — payoff depends on the minimum or maximum price over the option life. Parameter `lookback_type`: floating (call pays S_T minus the minimum, put pays the maximum minus S_T) or fixed (standard strike, extremum substituted). Priced by Monte Carlo.
+**LookbackOption**  payoff depends on the minimum or maximum price over the option life. Parameter `lookback_type`: floating (call pays S_T minus the minimum, put pays the maximum minus S_T) or fixed (standard strike, extremum substituted). Priced by Monte Carlo.
 
 ---
 
@@ -252,21 +252,21 @@ At portfolio level, each Greek is the sum of individual position Greeks weighted
 
 All strategies take an option object (used as a parameter template), the relevant strikes, and a pricing function. They return a `StrategyResult` object containing the net premium, breakeven levels, maximum profit, maximum loss, and numpy arrays for the payoff diagram.
 
-**Call Spread (Bull)** — long call at K1, short call at K2 with K1 < K2. Directional bullish view with limited cost and limited gain. Breakeven at K1 plus net debit.
+**Call Spread (Bull)**  long call at K1, short call at K2 with K1 < K2. Directional bullish view with limited cost and limited gain. Breakeven at K1 plus net debit.
 
-**Put Spread (Bear)** — long put at K2, short put at K1 with K1 < K2. Directional bearish view with limited cost and limited gain. Breakeven at K2 minus net debit.
+**Put Spread (Bear)**  long put at K2, short put at K1 with K1 < K2. Directional bearish view with limited cost and limited gain. Breakeven at K2 minus net debit.
 
-**Straddle** — long call and long put at the same strike. Bets on a large move in either direction. Maximum loss is the total premium paid.
+**Straddle**  long call and long put at the same strike. Bets on a large move in either direction. Maximum loss is the total premium paid.
 
-**Strangle** — long OTM put at K_put and long OTM call at K_call. Cheaper than a straddle but requires a larger move to be profitable.
+**Strangle**  long OTM put at K_put and long OTM call at K_call. Cheaper than a straddle but requires a larger move to be profitable.
 
-**Butterfly** — long K1, short 2x K2, long K3 where K1 < K2 < K3 and K2 is the midpoint. Profits if the underlying stays near K2. Available for calls or puts.
+**Butterfly**  long K1, short 2x K2, long K3 where K1 < K2 < K3 and K2 is the midpoint. Profits if the underlying stays near K2. Available for calls or puts.
 
-**Iron Condor** — short put spread combined with a short call spread. Collects a net credit. Profits if the underlying stays within the range [K2, K3] until expiry. Maximum loss is capped by the width of either spread.
+**Iron Condor**  short put spread combined with a short call spread. Collects a net credit. Profits if the underlying stays within the range [K2, K3] until expiry. Maximum loss is capped by the width of either spread.
 
 ---
 
-## Interface — Tab Guide
+## Interface  Tab Guide
 
 ### Pricing
 

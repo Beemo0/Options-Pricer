@@ -1,0 +1,32 @@
+from Option_type.European import European
+from Option_type.American import American
+from Method.Binomial import Binomial
+from Method.Trinomial import Trinomial
+from Method.BlackScholes import BlackScholes
+from Greeks.Vega import Vega
+
+
+S = 10  # Prix du sous-jacent
+K = 10  # Strike de l'option
+t = 0.5    # Temps en années
+r = 0.1 # Taux sans risque
+#y = 1    # Yield en années (Option américaine)
+sigma = 0.5 # Volatilité
+#N = 100  # Nombre d'itérations pour les méthodes binomiale et trinômiale
+
+
+# Création des objets pour les options
+euro_option = European(S, K, t, r, sigma)
+#amer_option = American(S, K, t, r, y, sigma)
+
+# Pricing des options européennes
+print("Prix Call Européen (Black-Scholes):", euro_option.pricing_method(BlackScholes, option_type="call", is_american=False))
+print("Prix Put Européen (Black-Scholes):", euro_option.pricing_method(BlackScholes, option_type="put", is_american=False))
+print("Le Vega :", Vega(euro_option))
+#print("Prix Call Européen (Binomial):", euro_option.pricing_method(Binomial, option_type="call", N=N, is_american=False))
+#print("Prix Put Européen (Trinomial):", euro_option.pricing_method(Trinomial, option_type="put", N=N, is_american=False))
+
+
+# Pricing des options américaines
+#print("Prix Call Américain (Binomial):", amer_option.pricing_method(Binomial, option_type="call", N=N, is_american=True))
+#print("Prix Put Américain (Trinomial):", amer_option.pricing_method(Trinomial, option_type="put", N=N, is_american=False))
